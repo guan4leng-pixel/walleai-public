@@ -700,14 +700,8 @@ let PORTFOLIO_MAP = portfolioRecordMap();
 let SAMPLE_DATA = { ...DEMO_DATA, ...Object.fromEntries(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r])) };
 
 const ui = {
-  ticker: document.getElementById('tickerInput'),
-  market: document.getElementById('marketSelect'),
-  analyze: document.getElementById('analyzeBtn'),
   freshness: document.getElementById('freshness'),
   pageRefresh: document.getElementById('pageRefresh'),
-  manualJson: document.getElementById('manualJson'),
-  applyJson: document.getElementById('applyJsonBtn'),
-  sampleButtons: Array.from(document.querySelectorAll('.sample-btn')),
   holdingsBody: document.getElementById('holdingsBody'),
   optionsStrip: document.getElementById('optionsStrip'),
   selectedTitle: document.getElementById('selectedTitle'),
@@ -1049,8 +1043,6 @@ function selectTicker(ticker, market, opts = {}) {
   currentUrl.searchParams.set('ticker', ticker);
   currentUrl.searchParams.set('market', market);
   if (opts.pushState !== false) history.replaceState({}, '', currentUrl);
-  document.getElementById('tickerInput').value = ticker;
-  document.getElementById('marketSelect').value = market;
   analyzeFromInputs(ticker, market);
   if (opts.focusAnalysis) {
     document.getElementById('analysis').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1059,49 +1051,17 @@ function selectTicker(ticker, market, opts = {}) {
 }
 
 function bindSampleButtons() {
-  ui.sampleButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const t = btn.dataset.sample;
-      ui.ticker.value = t;
-      ui.market.value = t.endsWith('.HK') ? 'HK' : 'US';
-      selectTicker(t, ui.market.value, { pushState: true, focusAnalysis: true });
-    });
-  });
+  return;
 }
 
-ui.analyze.addEventListener('click', () => {
-  const ticker = ui.ticker.value.trim();
-  const market = ui.market.value;
-  if (!ticker) return;
-  selectTicker(ticker, market, { pushState: true, focusAnalysis: true });
-});
-
-ui.applyJson.addEventListener('click', () => {
-  const obj = parseManual();
-  if (!obj) return;
-  analyzeFromInputs(obj.ticker || ui.ticker.value, obj.market || ui.market.value, obj);
-  document.getElementById('analysis').scrollIntoView({ behavior: 'smooth', block: 'start' });
-});
-
-ui.ticker.addEventListener('keydown', e => {
-  if (e.key === 'Enter') ui.analyze.click();
-});
-
 function parseManual() {
-  try {
-    return JSON.parse(ui.manualJson.value);
-  } catch (err) {
-    alert('Manual JSON is invalid.');
-    return null;
-  }
+  return null;
 }
 
 function resolveInitialSelection() {
   const params = new URLSearchParams(window.location.search);
-  const ticker = params.get('ticker') || 'AAPL';
+  const ticker = params.get('ticker') || (PORTFOLIO_RECORDS[0]?.displayTicker || PORTFOLIO_RECORDS[0]?.ticker || 'SOFI');
   const market = params.get('market') || (ticker.endsWith('.HK') ? 'HK' : 'US');
-  ui.ticker.value = ticker;
-  ui.market.value = market;
   return { ticker, market };
 }
 
@@ -1111,7 +1071,6 @@ async function init() {
   ui.pageRefresh.textContent = nowStamp();
   renderHoldingRows();
   renderOptionChips();
-  bindSampleButtons();
   const initial = resolveInitialSelection();
   selectTicker(initial.ticker, initial.market, { pushState: false, focusAnalysis: false });
 }

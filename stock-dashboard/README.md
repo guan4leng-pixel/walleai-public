@@ -4,14 +4,10 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 
 ## What it does
 - Shows a clickable list of your owned shares and open options
-- Clicking a ticker loads the 12-field analysis in the bottom section
+- Clicking a row loads the 12-field analysis in the bottom section
 - Displays source and retrieval time for both portfolio and price data
 - Reads prepared facts from `data/portfolio.json` when available
-- Supports demo mode for:
-  - BABA
-  - 0700.HK
-  - SOFI
-- Includes manual JSON fallback
+- No input controls; list-only interaction
 
 ## Files
 - `index.html`

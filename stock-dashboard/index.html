@@ -21,60 +21,6 @@
   </header>
 
   <main class="shell">
-    <section class="controls card">
-      <div class="controls__row">
-        <label>
-          Ticker / Share Name
-          <input id="tickerInput" type="text" placeholder="AAPL, BABA, 0700.HK, SOFI" />
-        </label>
-        <label>
-          Market
-          <select id="marketSelect">
-            <option>US</option>
-            <option>HK</option>
-            <option>SG</option>
-            <option>ETF</option>
-            <option>Other</option>
-          </select>
-        </label>
-        <button id="analyzeBtn" class="btn btn--primary">Analyse</button>
-      </div>
-
-      <div class="controls__row controls__row--wrap">
-        <button class="btn btn--ghost sample-btn" data-sample="BABA">BABA demo</button>
-        <button class="btn btn--ghost sample-btn" data-sample="0700.HK">0700.HK demo</button>
-        <button class="btn btn--ghost sample-btn" data-sample="SOFI">SOFI demo</button>
-      </div>
-
-      <details class="manual">
-        <summary>Manual JSON fallback</summary>
-        <p>Paste a JSON object here if live retrieval fails.</p>
-        <textarea id="manualJson" spellcheck="false" rows="10">{
-  "ticker": "AAPL",
-  "company": "Apple Inc.",
-  "market": "US",
-  "currency": "USD",
-  "price": 189.34,
-  "priceTimestamp": "2026-05-06T09:30:00+08:00",
-  "ma50": 182.1,
-  "ma200": 175.3,
-  "ema9": 188.7,
-  "ema20": 186.9,
-  "vwap": 188.0,
-  "rsi": 61,
-  "support": 183.0,
-  "resistance": 195.0,
-  "events": [
-    {"date": "2026-05-12", "label": "Earnings", "type": "earnings"}
-  ]
-}</textarea>
-        <div class="controls__row controls__row--wrap manual__actions">
-          <button id="applyJsonBtn" class="btn btn--ghost">Use JSON</button>
-          <span class="hint">Accepts fields like price, ma50, ma200, rsi, support, resistance, events, optionChain.</span>
-        </div>
-      </details>
-    </section>
-
     <section class="portfolio card">
       <div class="section-head">
         <div>
