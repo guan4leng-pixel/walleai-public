@@ -76,7 +76,56 @@
       </details>
     </section>
 
-    <section id="result" class="dashboard card-grid" aria-live="polite"></section>
+    <section class="portfolio card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Your holdings</p>
+          <h2>Click a ticker to load the analysis below</h2>
+          <p class="section-note">Rows show summary columns only. Each row has a URL that opens the selected analysis.</p>
+        </div>
+        <div class="section-note section-note--right">
+          <div><strong>Portfolio source:</strong> IBKR statement snapshot / Flex import flow</div>
+          <div><strong>Snapshot date:</strong> 2026-05-01</div>
+          <div><strong>Page refreshed:</strong> <span id="pageRefresh">--</span></div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="portfolio-table">
+          <thead>
+            <tr>
+              <th>Ticker / Share</th>
+              <th>Qty</th>
+              <th>Latest Price</th>
+              <th>Trend</th>
+              <th>RSI</th>
+              <th>Sell Put</th>
+              <th>Covered Call</th>
+              <th>Source / Retrieved</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody id="holdingsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="options-panel">
+        <h3>Open options held</h3>
+        <div id="optionsStrip" class="chip-list"></div>
+      </div>
+    </section>
+
+    <section id="analysis" class="analysis card">
+      <div class="analysis-header">
+        <div>
+          <p class="eyebrow">Selected analysis</p>
+          <h2 id="selectedTitle">Select a ticker above</h2>
+          <p id="selectedMeta" class="section-note">Source and retrieval info will appear here.</p>
+        </div>
+        <a id="selectedLink" class="analysis-link" href="#">Open URL</a>
+      </div>
+      <div id="result" class="dashboard card-grid" aria-live="polite"></div>
+    </section>
 
     <section class="footer-note">
       <p><strong>Publishing path:</strong> <code>/stock-dashboard/index.html</code></p>

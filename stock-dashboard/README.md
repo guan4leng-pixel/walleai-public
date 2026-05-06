@@ -3,15 +3,15 @@
 A one-page mobile-friendly dashboard for fast stock review and option setup thinking.
 
 ## What it does
-- Accepts a ticker or share name
-- Shows 12 concise analysis fields only
+- Shows a clickable list of your owned shares and open options
+- Clicking a ticker loads the 12-field analysis in the bottom section
+- Displays source and retrieval time for both portfolio and price data
 - Supports demo mode for:
   - AAPL
   - BABA
   - 0700.HK
   - SOFI
 - Includes manual JSON fallback
-- Designed for GitHub Pages
 
 ## Files
 - `index.html`
@@ -19,10 +19,20 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 - `app.js`
 
 ## Data flow
-1. Try Yahoo Finance chart data first for price and history.
-2. Derive trend, RSI, support, resistance, and score logic.
-3. Fall back to demo data or manual JSON when live data fails.
-4. Option-chain details are estimated when chain data is not available.
+1. IBKR portfolio: statement snapshot / Flex import flow
+2. Latest pricing: Yahoo Finance chart best effort
+3. If live data fails, fall back to cached portfolio/demo data or manual JSON
+
+## List columns
+- Ticker / Share
+- Qty
+- Latest Price
+- Trend
+- RSI
+- Sell Put
+- Covered Call
+- Source / Retrieved
+- URL
 
 ## Dashboard fields
 1. Ticker / Share Name
@@ -39,21 +49,16 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 12. Final Action
 
 ## Local preview
-Open `index.html` in a browser, or serve the folder:
-
 ```bash
 cd stock-dashboard
 python3 -m http.server 8000
 ```
-
-Then open:
-- `http://localhost:8000/`
+Open:
+- `http://localhost:8000/stock-dashboard/index.html`
 
 ## GitHub Pages
-Publish the repo using GitHub Pages and ensure this path is available:
+Publish the repo from GitHub Pages and keep this path available:
 - `/stock-dashboard/index.html`
-
-If you want a root landing page, link to the dashboard from the repo README.
 
 ## Notes
 - For education and research only. Not financial advice.

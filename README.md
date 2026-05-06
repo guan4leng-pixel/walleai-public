@@ -4,5 +4,6 @@
 - [Stock & Options Dashboard](stock-dashboard/index.html)
 
 ## Notes
-- The dashboard is mobile-friendly and intended for quick investor review.
+- Includes a clickable holdings list with bottom-section analysis.
+- Displays portfolio/source and retrieval timestamps.
 - For education and research only. Not financial advice.
