@@ -1066,12 +1066,16 @@ function resolveInitialSelection() {
 }
 
 async function init() {
-  await loadPreparedPortfolio();
   document.getElementById('freshness').textContent = `Freshness: ${nowStamp()} • ${PORTFOLIO_SOURCE}`;
   ui.pageRefresh.textContent = nowStamp();
   renderHoldingRows();
   renderOptionChips();
   const initial = resolveInitialSelection();
+  selectTicker(initial.ticker, initial.market, { pushState: false, focusAnalysis: false });
+
+  await loadPreparedPortfolio();
+  renderHoldingRows();
+  renderOptionChips();
   selectTicker(initial.ticker, initial.market, { pushState: false, focusAnalysis: false });
 }
 
