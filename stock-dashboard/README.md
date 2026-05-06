@@ -20,6 +20,19 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 3. Latest pricing: Yahoo Finance chart best effort
 4. If live data fails, fall back to embedded portfolio/demo data or manual JSON
 
+## Flex refresh
+Set these env vars, then run:
+
+```bash
+export IBKR_FLEX_TOKEN=...
+export IBKR_FLEX_QUERY_ID=...
+python3 stock-dashboard/scripts/refresh_ibkr_flex.py
+```
+
+Optional:
+- `IBKR_FLEX_REQUEST_ID` if you already have the statement request id
+- `--no-enrich-prices` to skip public price enrichment
+
 ## List columns
 - Ticker / Share
 - Qty
