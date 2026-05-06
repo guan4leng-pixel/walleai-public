@@ -338,6 +338,18 @@ function sourceLabel(record) {
   return `${source} • ${dateFmt.format(new Date(retrieved))}`;
 }
 
+function optionPremiumQuote(candidate, fallbackPremium) {
+  const bid = asFloat(candidate?.bid);
+  const ask = asFloat(candidate?.ask);
+  const mid = asFloat(candidate?.mid ?? candidate?.mark ?? candidate?.theoretical);
+  const premium = asFloat(candidate?.premium ?? candidate?.last ?? candidate?.price);
+
+  if (mid !== null) return { value: mid, basis: 'mid' };
+  if (bid !== null && ask !== null) return { value: +( (bid + ask) / 2 ).toFixed(2), basis: 'bid/ask mid' };
+  if (premium !== null) return { value: premium, basis: 'chain premium' };
+  return { value: fallbackPremium, basis: 'estimate' };
+}
+
 function analysisLink(ticker, market) {
   const params = new URLSearchParams({ ticker, market });
   return `?${params.toString()}#analysis`;
@@ -542,7 +554,7 @@ let PORTFOLIO_RECORDS = [
     events: [{ date: '2026-05-20', label: 'Results briefing', type: 'results' }],
     fundamentals: { quality: 11 },
     optionChain: {
-      puts: [{ expiry: '2026-05-28', strike: 115, premium: 4.2, delta: -0.27 }],
+      puts: [{ expiry: '2026-05-28', strike: 115, bid: 0.73, mid: 0.76, ask: 0.78, premium: 0.76, delta: -0.27 }],
       calls: [{ expiry: '2026-05-28', strike: 145, premium: 3.15, delta: 0.23 }, { expiry: '2026-06-29', strike: 145, premium: 3.75, delta: 0.21 }]
     }
   }),
@@ -734,6 +746,7 @@ function buildOptionSetup(record, kind) {
       dte: Math.max(1, daysBetween(APP_REFRESHED_AT, expiry)),
       strike: 'N/A',
       premium: 'N/A',
+      premiumBasis: 'N/A',
       delta: kind === 'put' ? -0.25 : 0.22,
       gap: 0,
       be: null,
@@ -750,12 +763,13 @@ function buildOptionSetup(record, kind) {
   const expiry = chosen?.expiry || toIsoDay(kind === 'put' ? 35 : 28);
   const dte = Math.max(1, daysBetween(APP_REFRESHED_AT, expiry));
   const strike = chosen?.strike ?? targetStrike;
-  const premium = chosen?.premium ?? estimatePremium(record.price, strike, kind);
+  const quote = optionPremiumQuote(chosen, estimatePremium(record.price, strike, kind));
+  const premium = quote.value;
   const delta = chosen?.delta ?? (kind === 'put' ? -0.25 : 0.22);
   const gap = record.price ? ((strike - record.price) / record.price * 100) : 0;
   const be = kind === 'put' ? +(strike - premium).toFixed(2) : null;
   const beGap = kind === 'put' && record.price ? ((record.price - be) / record.price * 100) : null;
-  return { strategy: kind === 'put' ? 'Sell Put' : 'Covered Call', expiry, dte, strike, premium, delta, gap, be, beGap };
+  return { strategy: kind === 'put' ? 'Sell Put' : 'Covered Call', expiry, dte, strike, premium, premiumBasis: quote.basis, delta, gap, be, beGap };
 }
 
 function computePortfolioSourceLine(record) {
@@ -880,8 +894,8 @@ function render(record) {
     buildField('Covered Call Rating', `${badge(coveredCall === 'Good' ? 'green' : coveredCall === 'Watch' ? 'yellow' : 'red', coveredCall)}<div class="field__small">Prefer strikes above resistance and near overbought conditions.</div>`),
     buildField('Suggested Option Setup', `
       <div class="stack">
-        <div class="setup-item"><strong>${putSetup.strategy}</strong><span>${putSetup.expiry} • ${putSetup.dte} DTE • Strike ${fmtCurrency(putSetup.strike, record.currency)} • Est. premium ${fmtCurrency(putSetup.premium, record.currency)} • Δ ${fmt.format(putSetup.delta)} • Gap ${fmtPct(putSetup.gap)} • BE ${fmtCurrency(putSetup.be, record.currency)} • BE gap ${fmtPct(putSetup.beGap)}</span></div>
-        <div class="setup-item"><strong>${callSetup.strategy}</strong><span>${callSetup.expiry} • ${callSetup.dte} DTE • Strike ${fmtCurrency(callSetup.strike, record.currency)} • Est. premium ${fmtCurrency(callSetup.premium, record.currency)} • Δ ${fmt.format(callSetup.delta)} • Gap ${fmtPct(callSetup.gap)}${record.optionChain ? '' : ' • option price unavailable'}</span></div>
+        <div class="setup-item"><strong>${putSetup.strategy}</strong><span>${putSetup.expiry} • ${putSetup.dte} DTE • Strike ${fmtCurrency(putSetup.strike, record.currency)} • Expected premium ${fmtCurrency(putSetup.premium, record.currency)} (${putSetup.premiumBasis}) • Δ ${fmt.format(putSetup.delta)} • Gap ${fmtPct(putSetup.gap)} • BE ${fmtCurrency(putSetup.be, record.currency)} • BE gap ${fmtPct(putSetup.beGap)}</span></div>
+        <div class="setup-item"><strong>${callSetup.strategy}</strong><span>${callSetup.expiry} • ${callSetup.dte} DTE • Strike ${fmtCurrency(callSetup.strike, record.currency)} • Expected premium ${fmtCurrency(callSetup.premium, record.currency)} (${callSetup.premiumBasis}) • Δ ${fmt.format(callSetup.delta)} • Gap ${fmtPct(callSetup.gap)}${record.optionChain ? '' : ' • option price unavailable'}</span></div>
       </div>
     `),
     buildField('Final Action', `
