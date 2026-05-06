@@ -169,8 +169,10 @@ function computeRSIStatus(value) {
 
 function computeCross(record) {
   if (!isFinite(record.ma50) || !isFinite(record.ma200)) return 'None';
-  if (record.ma50 > record.ma200) return 'Golden Cross';
-  if (record.ma50 < record.ma200) return 'Dead Cross';
+  const bullishStack = record.ma50 > record.ma200 && record.price > record.ma50 && record.ema9 > record.ema20;
+  const bearishStack = record.ma50 < record.ma200 && record.price < record.ma50 && record.ema9 < record.ema20;
+  if (bullishStack) return 'Golden Cross';
+  if (bearishStack) return 'Dead Cross';
   return 'None';
 }
 
