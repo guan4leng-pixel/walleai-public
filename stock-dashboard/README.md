@@ -6,8 +6,8 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 - Shows a clickable list of your owned shares and open options
 - Clicking a ticker loads the 12-field analysis in the bottom section
 - Displays source and retrieval time for both portfolio and price data
+- Reads prepared facts from `data/portfolio.json` when available
 - Supports demo mode for:
-  - AAPL
   - BABA
   - 0700.HK
   - SOFI
@@ -19,9 +19,10 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 - `app.js`
 
 ## Data flow
-1. IBKR portfolio: statement snapshot / Flex import flow
-2. Latest pricing: Yahoo Finance chart best effort
-3. If live data fails, fall back to cached portfolio/demo data or manual JSON
+1. Prep task refreshes `data/portfolio.json` from IBKR Flex / statement export
+2. Static page loads prepared facts first
+3. Latest pricing: Yahoo Finance chart best effort
+4. If live data fails, fall back to embedded portfolio/demo data or manual JSON
 
 ## List columns
 - Ticker / Share

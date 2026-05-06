@@ -517,7 +517,7 @@ function buildPortfolioRecord(def) {
   };
 }
 
-const PORTFOLIO_RECORDS = [
+let PORTFOLIO_RECORDS = [
   buildPortfolioRecord({
     ticker: '700', market: 'HK', company: 'Tencent', currency: 'HKD', quantity: 700,
     price: 472.2, priceTimestamp: '2026-05-05T16:08:12+08:00',
@@ -633,7 +633,7 @@ const PORTFOLIO_RECORDS = [
   })
 ];
 
-const OWNED_OPTIONS = [
+let OWNED_OPTIONS = [
   { underlyingTicker: '700', underlying: '700 Tencent', market: 'HK', contract: '700 28MAY26 450 Put', expiry: '2026-05-28', right: 'Put', qty: -2, source: PORTFOLIO_SOURCE },
   { underlyingTicker: '9988', underlying: '9988 Alibaba HK', market: 'HK', contract: '9988 28MAY26 115 Put', expiry: '2026-05-28', right: 'Put', qty: -3, source: PORTFOLIO_SOURCE },
   { underlyingTicker: '9988', underlying: '9988 Alibaba HK', market: 'HK', contract: '9988 28MAY26 145 Call', expiry: '2026-05-28', right: 'Call', qty: -1, source: PORTFOLIO_SOURCE },
@@ -696,8 +696,8 @@ function portfolioRecordMap() {
   return map;
 }
 
-const PORTFOLIO_MAP = portfolioRecordMap();
-const SAMPLE_DATA = { ...DEMO_DATA, ...Object.fromEntries(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r])) };
+let PORTFOLIO_MAP = portfolioRecordMap();
+let SAMPLE_DATA = { ...DEMO_DATA, ...Object.fromEntries(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r])) };
 
 const ui = {
   ticker: document.getElementById('tickerInput'),
@@ -965,6 +965,20 @@ function recordPortfolioSource(symbol, market) {
   return base?.portfolioSource || PORTFOLIO_SOURCE;
 }
 
+async function loadPreparedPortfolio() {
+  try {
+    const res = await fetch('./data/portfolio.json', { cache: 'no-store' });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (Array.isArray(data.holdings) && data.holdings.length) PORTFOLIO_RECORDS = data.holdings;
+    if (Array.isArray(data.options) && data.options.length) OWNED_OPTIONS = data.options;
+    PORTFOLIO_MAP = portfolioRecordMap();
+    SAMPLE_DATA = { ...DEMO_DATA, ...Object.fromEntries(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r])) };
+  } catch (err) {
+    // keep embedded fallback data
+  }
+}
+
 function mergeData(base, patch) {
   return {
     ...base,
@@ -1091,7 +1105,8 @@ function resolveInitialSelection() {
   return { ticker, market };
 }
 
-function init() {
+async function init() {
+  await loadPreparedPortfolio();
   document.getElementById('freshness').textContent = `Freshness: ${nowStamp()} • ${PORTFOLIO_SOURCE}`;
   ui.pageRefresh.textContent = nowStamp();
   renderHoldingRows();
