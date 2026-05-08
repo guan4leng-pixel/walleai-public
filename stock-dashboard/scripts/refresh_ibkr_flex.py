@@ -27,7 +27,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Iterable
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
+from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 from urllib.request import Request, urlopen
 
 SG_TZ = timezone(timedelta(hours=8))
@@ -73,11 +73,12 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--token", default=os.getenv("IBKR_FLEX_TOKEN"), help="IBKR Flex token (env: IBKR_FLEX_TOKEN)")
     p.add_argument("--query-id", default=os.getenv("IBKR_FLEX_QUERY_ID"), help="IBKR Flex query id (env: IBKR_FLEX_QUERY_ID)")
     p.add_argument("--request-id", default=os.getenv("IBKR_FLEX_REQUEST_ID"), help="Existing request id to fetch directly (env: IBKR_FLEX_REQUEST_ID)")
+    p.add_argument("--flex-url", default=os.getenv("IBKR_FLEX_URL"), help="Full Flex SendRequest URL with embedded t/q/v (env: IBKR_FLEX_URL)")
     p.add_argument("--send-url", default=SEND_URL, help="Flex SendRequest URL")
     p.add_argument("--statement-url", default=STATEMENT_URL, help="Flex GetStatement URL")
     p.add_argument("--v", default="3", help="Flex API version")
     p.add_argument("--poll-delay", type=float, default=8.0, help="Seconds between polls")
-    p.add_argument("--max-attempts", type=int, default=18, help="Maximum poll attempts")
+    p.add_argument("--max-attempts", type=int, default=3, help="Maximum poll attempts")
     p.add_argument("--timeout", type=float, default=20.0, help="HTTP timeout seconds")
     p.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="Output JSON path")
     p.add_argument("--raw-output", type=Path, default=DEFAULT_RAW_OUTPUT, help="Raw XML output path")
@@ -108,9 +109,25 @@ def http_get_json(url: str, timeout: float) -> dict[str, Any] | None:
         return None
 
 
+def split_flex_url(url: str | None) -> tuple[str | None, dict[str, str]]:
+    if not url:
+        return None, {}
+    parsed = urlparse(url)
+    base = urlunparse((parsed.scheme, parsed.netloc, parsed.path, "", "", "")) if parsed.scheme and parsed.netloc else url.split("?", 1)[0]
+    params = {k: v[-1] for k, v in parse_qs(parsed.query).items() if v}
+    return base, params
+
+
 def send_request(token: str, query_id: str, version: str, send_url: str, timeout: float) -> str:
-    params = urlencode({"t": token, "q": query_id, "v": version})
-    text = http_get(f"{send_url}?{params}", timeout)
+    base_url, existing = split_flex_url(send_url)
+    params = {
+        "t": token or existing.get("t", ""),
+        "q": query_id or existing.get("q", ""),
+        "v": version or existing.get("v", "3"),
+    }
+    if not params["t"] or not params["q"]:
+        raise RuntimeError("Missing Flex token/query id; pass them separately or embed them in --send-url/IBKR_FLEX_URL")
+    text = http_get(f"{base_url}?{urlencode(params)}", timeout)
     request_id = extract_request_id(text)
     if not request_id:
         raise RuntimeError(f"Could not parse request id from SendRequest response: {text[:400]}")
@@ -145,6 +162,15 @@ def looks_ready(text: str) -> bool:
     if "<" in t and ("portfolio" in t or "account" in t or "trade" in t):
         return True
     return False
+
+
+def ensure_flex_success(xml_text: str) -> None:
+    root = ET.fromstring(xml_text)
+    status = root.findtext(".//Status")
+    if status and status.strip().lower() != "ok":
+        code = root.findtext(".//ErrorCode") or "unknown"
+        message = root.findtext(".//ErrorMessage") or "Flex request failed"
+        raise RuntimeError(f"Flex request failed ({code}): {message}")
 
 
 def get_statement(request_id: str, token: str, version: str, statement_url: str, timeout: float) -> str:
@@ -273,6 +299,7 @@ def parse_item(elem: ET.Element) -> dict[str, Any] | None:
 
 
 def parse_statement_xml(xml_text: str) -> dict[str, Any]:
+    ensure_flex_success(xml_text)
     root = ET.fromstring(xml_text)
     generated = now_iso()
     records: list[dict[str, Any]] = []
@@ -434,11 +461,22 @@ def write_json(path: Path, obj: dict[str, Any], pretty: int) -> None:
 
 def main() -> int:
     args = parse_args()
+    _, send_params = split_flex_url(args.send_url)
+    flex_base, flex_params = split_flex_url(args.flex_url)
+    if flex_base:
+        args.send_url = flex_base
     if not args.token:
-        print("Missing IBKR_FLEX_TOKEN (or --token)", file=sys.stderr)
+        args.token = flex_params.get("t") or send_params.get("t")
+    if not args.query_id:
+        args.query_id = flex_params.get("q") or send_params.get("q")
+    if args.v == "3":
+        args.v = flex_params.get("v") or send_params.get("v") or args.v
+
+    if not args.token:
+        print("Missing IBKR_FLEX_TOKEN (or --token), or embed t= in --send-url/IBKR_FLEX_URL", file=sys.stderr)
         return 2
     if not args.query_id and not args.request_id:
-        print("Missing IBKR_FLEX_QUERY_ID (or --query-id) or an existing request id", file=sys.stderr)
+        print("Missing IBKR_FLEX_QUERY_ID (or --query-id), or embed q= in --send-url/IBKR_FLEX_URL, or supply an existing request id", file=sys.stderr)
         return 2
 
     try:

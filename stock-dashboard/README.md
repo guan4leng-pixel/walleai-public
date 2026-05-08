@@ -21,7 +21,7 @@ A one-page mobile-friendly dashboard for fast stock review and option setup thin
 4. If live data fails, fall back to embedded portfolio/demo data or manual JSON
 
 ## Flex refresh
-Set these env vars, then run:
+You can pass the full Flex SendRequest URL directly, or set env vars:
 
 ```bash
 export IBKR_FLEX_TOKEN=...
@@ -29,9 +29,18 @@ export IBKR_FLEX_QUERY_ID=...
 python3 stock-dashboard/scripts/refresh_ibkr_flex.py
 ```
 
+Or:
+
+```bash
+export IBKR_FLEX_URL='https://gdcdyn.interactivebrokers.com/Universal/servlet/FlexStatementService.SendRequest?t=...&q=...&v=3'
+python3 stock-dashboard/scripts/refresh_ibkr_flex.py
+```
+
 Optional:
 - `IBKR_FLEX_REQUEST_ID` if you already have the statement request id
+- `IBKR_FLEX_URL` if you want to embed token/query/version in one URL
 - `--no-enrich-prices` to skip public price enrichment
+- Polling is capped at 3 attempts by default
 
 ## List columns
 - Ticker / Share
