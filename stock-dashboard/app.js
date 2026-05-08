@@ -1,7 +1,7 @@
 const APP_REFRESHED_AT = new Date();
 const APP_REFRESHED_AT_ISO = APP_REFRESHED_AT.toISOString();
-const PORTFOLIO_AS_OF = '2026-05-01';
-const PORTFOLIO_SOURCE = `IBKR Activity Statement snapshot (${PORTFOLIO_AS_OF})`;
+let PORTFOLIO_AS_OF = '2026-05-06';
+let PORTFOLIO_SOURCE = `IBKR Activity Statement snapshot (${PORTFOLIO_AS_OF})`;
 
 const fmt = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
 const dateFmt = new Intl.DateTimeFormat('en-SG', {
@@ -591,7 +591,7 @@ let PORTFOLIO_RECORDS = [
     optionChain: { puts: [], calls: [{ expiry: '2026-05-15', strike: 370, premium: 4.8, delta: 0.21 }] }
   }),
   buildPortfolioRecord({
-    ticker: 'H78', market: 'US', company: 'Hongkong Land', currency: 'USD', quantity: 3000,
+    ticker: 'H78', market: 'SG', company: 'Hongkong Land', currency: 'USD', quantity: 1500,
     price: 7.89, priceTimestamp: '2026-05-06T09:30:00+08:00',
     ma50: 7.6, ma200: 6.9, ema9: 7.85, ema20: 7.81, vwap: 7.82, rsi: 52,
     support: 7.5, resistance: 8.2, source: PORTFOLIO_SOURCE,
@@ -980,6 +980,8 @@ async function loadPreparedPortfolio() {
     const res = await fetch('./data/portfolio.json', { cache: 'no-store' });
     if (!res.ok) return;
     const data = await res.json();
+    if (data?.asOf) PORTFOLIO_AS_OF = data.asOf;
+    if (data?.source) PORTFOLIO_SOURCE = data.source;
     if (Array.isArray(data.holdings) && data.holdings.length) PORTFOLIO_RECORDS = data.holdings;
     if (Array.isArray(data.options) && data.options.length) OWNED_OPTIONS = data.options;
     PORTFOLIO_MAP = portfolioRecordMap();
@@ -1054,12 +1056,15 @@ async function analyzeFromInputs(symbol, market, manualOverride = null) {
 }
 
 function selectTicker(ticker, market, opts = {}) {
-  const normalized = normalizeTicker(ticker, market);
+  const canonical = lookupRecord(ticker, market);
+  const resolvedTicker = canonical?.displayTicker || canonical?.ticker || ticker;
+  const resolvedMarket = canonical?.market || market;
+  const normalized = normalizeTicker(resolvedTicker, resolvedMarket);
   const currentUrl = new URL(window.location.href);
-  currentUrl.searchParams.set('ticker', ticker);
-  currentUrl.searchParams.set('market', market);
+  currentUrl.searchParams.set('ticker', resolvedTicker);
+  currentUrl.searchParams.set('market', resolvedMarket);
   if (opts.pushState !== false) history.replaceState({}, '', currentUrl);
-  analyzeFromInputs(ticker, market);
+  analyzeFromInputs(resolvedTicker, resolvedMarket);
   if (opts.focusAnalysis) {
     document.getElementById('analysis').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
