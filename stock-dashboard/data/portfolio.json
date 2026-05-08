@@ -1,26 +1,688 @@
 {
-  "asOf": "2026-05-01",
-  "source": "IBKR prepared facts file",
+  "asOf": "2026-05-06",
+  "source": "IBKR Flex Activity Statement forwarded via email",
   "holdings": [
-    {"ticker":"700","displayTicker":"0700.HK","company":"Tencent","market":"HK","currency":"HKD","quantity":700,"price":472.2,"priceTimestamp":"2026-05-05T16:08:12+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":448.0,"ma200":410.0,"ema9":468.4,"ema20":462.2,"vwap":466.8,"rsi":58,"support":450.0,"resistance":488.0,"events":[{"date":"2026-05-18","label":"Results briefing","type":"results"}],"fundamentals":{"quality":13},"optionChain":{"puts":[{"expiry":"2026-05-28","strike":450,"premium":9.8,"delta":-0.25}],"calls":[{"expiry":"2026-06-18","strike":490,"premium":8.9,"delta":0.22}]},"pageUrlLabel":"open"},
-    {"ticker":"9988","displayTicker":"9988","company":"Alibaba HK","market":"HK","currency":"HKD","quantity":6500,"price":126.0,"priceTimestamp":"2026-05-05T16:08:12+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":121.0,"ma200":95.0,"ema9":124.0,"ema20":121.5,"vwap":123.0,"rsi":55,"support":118.0,"resistance":135.0,"events":[{"date":"2026-05-20","label":"Results briefing","type":"results"}],"fundamentals":{"quality":11},"optionChain":{"puts":[{"expiry":"2026-05-28","strike":115,"bid":0.73,"mid":0.76,"ask":0.78,"premium":0.76,"delta":-0.27}],"calls":[{"expiry":"2026-05-28","strike":145,"premium":3.15,"delta":0.23},{"expiry":"2026-06-29","strike":145,"premium":3.75,"delta":0.21}]},"pageUrlLabel":"open"},
-    {"ticker":"AMD","displayTicker":"AMD","company":"Advanced Micro Devices","market":"US","currency":"USD","quantity":75,"price":360.54,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":338.0,"ma200":270.0,"ema9":357.5,"ema20":350.1,"vwap":355.0,"rsi":64,"support":330.0,"resistance":380.0,"events":[],"fundamentals":{"quality":12},"optionChain":{"puts":[{"expiry":"2026-05-29","strike":300,"premium":6.25,"delta":-0.24},{"expiry":"2026-06-05","strike":320,"premium":8.1,"delta":-0.2}],"calls":[]},"pageUrlLabel":"open"},
-    {"ticker":"BABA","displayTicker":"BABA","company":"Alibaba ADR","market":"US","currency":"USD","quantity":1200,"price":131.5,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":129.0,"ma200":105.0,"ema9":130.8,"ema20":129.6,"vwap":130.4,"rsi":54,"support":126.0,"resistance":140.0,"events":[{"date":"2026-05-20","label":"Results briefing","type":"results"},{"date":"2026-05-28","label":"China policy risk watch","type":"macro"}],"fundamentals":{"quality":11},"optionChain":{"puts":[],"calls":[{"expiry":"2026-05-15","strike":145,"premium":2.95,"delta":0.23}]},"pageUrlLabel":"open"},
-    {"ticker":"GOOGL","displayTicker":"GOOGL","company":"Alphabet","market":"US","currency":"USD","quantity":100,"price":385.69,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":372.0,"ma200":310.0,"ema9":384.0,"ema20":379.2,"vwap":382.7,"rsi":67,"support":375.0,"resistance":398.0,"events":[{"date":"2026-05-23","label":"Results briefing","type":"results"}],"fundamentals":{"quality":14},"optionChain":{"puts":[],"calls":[{"expiry":"2026-05-15","strike":370,"premium":4.8,"delta":0.21}]},"pageUrlLabel":"open"},
-    {"ticker":"H78","displayTicker":"H78","company":"Hongkong Land","market":"US","currency":"USD","quantity":3000,"price":7.89,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":7.6,"ma200":6.9,"ema9":7.85,"ema20":7.81,"vwap":7.82,"rsi":52,"support":7.5,"resistance":8.2,"events":[],"fundamentals":{"quality":9},"optionChain":{"puts":[],"calls":[]},"pageUrlLabel":"open"},
-    {"ticker":"JEPG","displayTicker":"JEPG","company":"JPMorgan income ETF","market":"US","currency":"USD","quantity":288,"price":26.135,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":25.8,"ma200":24.9,"ema9":26.0,"ema20":25.9,"vwap":25.95,"rsi":50,"support":25.5,"resistance":26.8,"events":[],"fundamentals":{"quality":10},"optionChain":{"puts":[],"calls":[]},"pageUrlLabel":"open"},
-    {"ticker":"JEPI","displayTicker":"JEPI","company":"JPMorgan Equity Premium Income ETF","market":"US","currency":"USD","quantity":400,"price":24.855,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":24.8,"ma200":24.6,"ema9":24.85,"ema20":24.8,"vwap":24.82,"rsi":49,"support":24.5,"resistance":25.2,"events":[],"fundamentals":{"quality":10},"optionChain":{"puts":[],"calls":[]},"pageUrlLabel":"open"},
-    {"ticker":"JEPQ","displayTicker":"JEPQ","company":"JPMorgan Nasdaq Equity Premium Income ETF","market":"US","currency":"USD","quantity":400,"price":27.0,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":26.5,"ma200":24.8,"ema9":26.9,"ema20":26.8,"vwap":26.85,"rsi":51,"support":26.0,"resistance":27.8,"events":[],"fundamentals":{"quality":10},"optionChain":{"puts":[],"calls":[]},"pageUrlLabel":"open"},
-    {"ticker":"SLV","displayTicker":"SLV","company":"iShares Silver Trust","market":"US","currency":"USD","quantity":500,"price":68.29,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":66.0,"ma200":61.5,"ema9":67.9,"ema20":67.2,"vwap":67.5,"rsi":58,"support":65.7,"resistance":70.0,"events":[],"fundamentals":{"quality":9},"optionChain":{"puts":[],"calls":[]},"pageUrlLabel":"open"},
-    {"ticker":"SOFI","displayTicker":"SOFI","company":"SoFi Technologies","market":"US","currency":"USD","quantity":1400,"price":16.43,"priceTimestamp":"2026-05-06T09:30:00+08:00","priceSource":"Yahoo Finance chart","portfolioSource":"IBKR Activity Statement snapshot (2026-05-01)","retrievedAt":"2026-05-06T15:12:00+08:00","ma50":17.1,"ma200":9.8,"ema9":16.9,"ema20":16.7,"vwap":16.6,"rsi":72,"support":15.8,"resistance":17.4,"events":[{"date":"2026-05-15","label":"Earnings","type":"earnings"}],"fundamentals":{"quality":8},"optionChain":{"puts":[{"expiry":"2026-06-19","strike":15,"premium":0.85,"delta":-0.29}],"calls":[{"expiry":"2026-06-19","strike":17.5,"premium":0.7,"delta":0.26}]},"pageUrlLabel":"open"}
+    {
+      "ticker": "700",
+      "displayTicker": "0700.HK",
+      "company": "Tencent",
+      "market": "HK",
+      "currency": "HKD",
+      "quantity": 700.0,
+      "price": 463.0,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 448.0,
+      "ma200": 410.0,
+      "ema9": 468.4,
+      "ema20": 462.2,
+      "vwap": 466.8,
+      "rsi": 58,
+      "support": 450.0,
+      "resistance": 488.0,
+      "events": [
+        {
+          "date": "2026-05-18",
+          "label": "Results briefing",
+          "type": "results"
+        }
+      ],
+      "fundamentals": {
+        "quality": 13,
+        "unrealizedPL": 7258.58312
+      },
+      "optionChain": {
+        "puts": [
+          {
+            "expiry": "2026-05-28",
+            "strike": 450,
+            "premium": 9.8,
+            "delta": -0.25
+          }
+        ],
+        "calls": [
+          {
+            "expiry": "2026-06-18",
+            "strike": 490,
+            "premium": 8.9,
+            "delta": 0.22
+          }
+        ]
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 324100.0,
+      "marketValueCurrency": "HKD"
+    },
+    {
+      "ticker": "9988",
+      "displayTicker": "9988.HK",
+      "company": "Alibaba HK",
+      "market": "HK",
+      "currency": "HKD",
+      "quantity": 6500.0,
+      "price": 134.2,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 121.0,
+      "ma200": 95.0,
+      "ema9": 124.0,
+      "ema20": 121.5,
+      "vwap": 123.0,
+      "rsi": 55,
+      "support": 118.0,
+      "resistance": 135.0,
+      "events": [
+        {
+          "date": "2026-05-20",
+          "label": "Results briefing",
+          "type": "results"
+        }
+      ],
+      "fundamentals": {
+        "quality": 11,
+        "unrealizedPL": 97516.487262
+      },
+      "optionChain": {
+        "puts": [
+          {
+            "expiry": "2026-05-28",
+            "strike": 115,
+            "bid": 0.73,
+            "mid": 0.76,
+            "ask": 0.78,
+            "premium": 0.76,
+            "delta": -0.27
+          }
+        ],
+        "calls": [
+          {
+            "expiry": "2026-05-28",
+            "strike": 145,
+            "premium": 3.15,
+            "delta": 0.23
+          },
+          {
+            "expiry": "2026-06-29",
+            "strike": 145,
+            "premium": 3.75,
+            "delta": 0.21
+          }
+        ]
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 872300.0,
+      "marketValueCurrency": "HKD"
+    },
+    {
+      "ticker": "AMD",
+      "displayTicker": "AMD",
+      "company": "Advanced Micro Devices",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 75.0,
+      "price": 421.39,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 338.0,
+      "ma200": 270.0,
+      "ema9": 357.5,
+      "ema20": 350.1,
+      "vwap": 355.0,
+      "rsi": 64,
+      "support": 330.0,
+      "resistance": 380.0,
+      "events": [],
+      "fundamentals": {
+        "quality": 12,
+        "unrealizedPL": 22581.13
+      },
+      "optionChain": {
+        "puts": [
+          {
+            "expiry": "2026-05-29",
+            "strike": 300,
+            "premium": 6.25,
+            "delta": -0.24
+          },
+          {
+            "expiry": "2026-06-05",
+            "strike": 320,
+            "premium": 8.1,
+            "delta": -0.2
+          }
+        ],
+        "calls": []
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 31604.25,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "BABA",
+      "displayTicker": "BABA",
+      "company": "Alibaba ADR",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 1200.0,
+      "price": 141.44,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 129.0,
+      "ma200": 105.0,
+      "ema9": 130.8,
+      "ema20": 129.6,
+      "vwap": 130.4,
+      "rsi": 54,
+      "support": 126.0,
+      "resistance": 140.0,
+      "events": [
+        {
+          "date": "2026-05-20",
+          "label": "Results briefing",
+          "type": "results"
+        },
+        {
+          "date": "2026-05-28",
+          "label": "China policy risk watch",
+          "type": "macro"
+        }
+      ],
+      "fundamentals": {
+        "quality": 11,
+        "unrealizedPL": 17911.484105
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": [
+          {
+            "expiry": "2026-05-15",
+            "strike": 145,
+            "premium": 2.95,
+            "delta": 0.23
+          }
+        ]
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 169728.0,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "GOOGL",
+      "displayTicker": "GOOGL",
+      "company": "Alphabet",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 100.0,
+      "price": 398.04,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 372.0,
+      "ma200": 310.0,
+      "ema9": 384.0,
+      "ema20": 379.2,
+      "vwap": 382.7,
+      "rsi": 67,
+      "support": 375.0,
+      "resistance": 398.0,
+      "events": [
+        {
+          "date": "2026-05-23",
+          "label": "Results briefing",
+          "type": "results"
+        }
+      ],
+      "fundamentals": {
+        "quality": 14,
+        "unrealizedPL": 22251.5
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": [
+          {
+            "expiry": "2026-05-15",
+            "strike": 370,
+            "premium": 4.8,
+            "delta": 0.21
+          }
+        ]
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 39804.0,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "H78",
+      "displayTicker": "H78.SI",
+      "company": "Hongkong Land",
+      "market": "SG",
+      "currency": "USD",
+      "quantity": 1500.0,
+      "price": 7.97,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 7.6,
+      "ma200": 6.9,
+      "ema9": 7.85,
+      "ema20": 7.81,
+      "vwap": 7.82,
+      "rsi": 52,
+      "support": 7.5,
+      "resistance": 8.2,
+      "events": [],
+      "fundamentals": {
+        "quality": 9,
+        "unrealizedPL": 5310.0
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": []
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 11955.0,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "JEPG",
+      "displayTicker": "JEPG",
+      "company": "JPMorgan income ETF",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 288.0,
+      "price": 26.09,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 25.8,
+      "ma200": 24.9,
+      "ema9": 26.0,
+      "ema20": 25.9,
+      "vwap": 25.95,
+      "rsi": 50,
+      "support": 25.5,
+      "resistance": 26.8,
+      "events": [],
+      "fundamentals": {
+        "quality": 10,
+        "unrealizedPL": 56.069076
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": []
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 7513.92,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "JEPI",
+      "displayTicker": "JEPI",
+      "company": "JPMorgan Equity Premium Income ETF",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 400.0,
+      "price": 24.65,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 24.8,
+      "ma200": 24.6,
+      "ema9": 24.85,
+      "ema20": 24.8,
+      "vwap": 24.82,
+      "rsi": 49,
+      "support": 24.5,
+      "resistance": 25.2,
+      "events": [],
+      "fundamentals": {
+        "quality": 10,
+        "unrealizedPL": -113.51976
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": []
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 9860.0,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "JEPQ",
+      "displayTicker": "JEPQ",
+      "company": "JPMorgan Nasdaq Equity Premium Income ETF",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 400.0,
+      "price": 27.185,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 26.5,
+      "ma200": 24.8,
+      "ema9": 26.9,
+      "ema20": 26.8,
+      "vwap": 26.85,
+      "rsi": 51,
+      "support": 26.0,
+      "resistance": 27.8,
+      "events": [],
+      "fundamentals": {
+        "quality": 10,
+        "unrealizedPL": 246.12381
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": []
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 10874.0,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "SLV",
+      "displayTicker": "SLV",
+      "company": "iShares Silver Trust",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 500.0,
+      "price": 70.13,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 66.0,
+      "ma200": 61.5,
+      "ema9": 67.9,
+      "ema20": 67.2,
+      "vwap": 67.5,
+      "rsi": 58,
+      "support": 65.7,
+      "resistance": 70.0,
+      "events": [],
+      "fundamentals": {
+        "quality": 9,
+        "unrealizedPL": -1438.127647
+      },
+      "optionChain": {
+        "puts": [],
+        "calls": []
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 35065.0,
+      "marketValueCurrency": "USD"
+    },
+    {
+      "ticker": "SOFI",
+      "displayTicker": "SOFI",
+      "company": "SoFi Technologies",
+      "market": "US",
+      "currency": "USD",
+      "quantity": 2000.0,
+      "price": 16.3,
+      "priceTimestamp": "2026-05-08T10:53:49+08:00",
+      "priceSource": "IBKR Flex",
+      "portfolioSource": "IBKR Flex statement (2026-05-06)",
+      "retrievedAt": "2026-05-08T10:53:49+08:00",
+      "ma50": 17.1,
+      "ma200": 9.8,
+      "ema9": 16.9,
+      "ema20": 16.7,
+      "vwap": 16.6,
+      "rsi": 72,
+      "support": 15.8,
+      "resistance": 17.4,
+      "events": [
+        {
+          "date": "2026-05-15",
+          "label": "Earnings",
+          "type": "earnings"
+        }
+      ],
+      "fundamentals": {
+        "quality": 8,
+        "unrealizedPL": -1821.428177
+      },
+      "optionChain": {
+        "puts": [
+          {
+            "expiry": "2026-06-19",
+            "strike": 15,
+            "premium": 0.85,
+            "delta": -0.29
+          }
+        ],
+        "calls": [
+          {
+            "expiry": "2026-06-19",
+            "strike": 17.5,
+            "premium": 0.7,
+            "delta": 0.26
+          }
+        ]
+      },
+      "pageUrlLabel": "open",
+      "marketValue": 32600.0,
+      "marketValueCurrency": "USD"
+    }
   ],
   "options": [
-    {"underlyingTicker":"700","underlying":"700 Tencent","market":"HK","contract":"700 28MAY26 450 Put","expiry":"2026-05-28","right":"Put","qty":-2,"source":"IBKR Activity Statement snapshot (2026-05-01)"},
-    {"underlyingTicker":"9988","underlying":"9988 Alibaba HK","market":"HK","contract":"9988 28MAY26 115 Put","expiry":"2026-05-28","right":"Put","qty":-3,"source":"IBKR Activity Statement snapshot (2026-05-01)"},
-    {"underlyingTicker":"9988","underlying":"9988 Alibaba HK","market":"HK","contract":"9988 28MAY26 145 Call","expiry":"2026-05-28","right":"Call","qty":-1,"source":"IBKR Activity Statement snapshot (2026-05-01)"},
-    {"underlyingTicker":"AMD","underlying":"AMD","market":"US","contract":"AMD 29MAY26 300 Put","expiry":"2026-05-29","right":"Put","qty":-1,"source":"IBKR Activity Statement snapshot (2026-05-01)"},
-    {"underlyingTicker":"BABA","underlying":"BABA","market":"US","contract":"BABA 15MAY26 145 Call","expiry":"2026-05-15","right":"Call","qty":-2,"source":"IBKR Activity Statement snapshot (2026-05-01)"},
-    {"underlyingTicker":"GOOGL","underlying":"GOOGL","market":"US","contract":"GOOGL 15MAY26 370 Call","expiry":"2026-05-15","right":"Call","qty":-1,"source":"IBKR Activity Statement snapshot (2026-05-01)"},
-    {"underlyingTicker":"SOFI","underlying":"SOFI","market":"US","contract":"SOFI 15MAY26 24 Put","expiry":"2026-05-15","right":"Put","qty":-5,"source":"IBKR Activity Statement snapshot (2026-05-01)"}
+    {
+      "underlyingTicker": "5",
+      "underlying": "5",
+      "market": "HK",
+      "contract": "5 28MAY26 132.5 Put",
+      "expiry": "2026-05-28",
+      "right": "Put",
+      "qty": -3,
+      "source": "IBKR Flex",
+      "value": -1344.0,
+      "unrealizedPL": 282.57
+    },
+    {
+      "underlyingTicker": "823",
+      "underlying": "823",
+      "market": "HK",
+      "contract": "823 29JUN26 36 Put",
+      "expiry": "2026-06-29",
+      "right": "Put",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -400.0,
+      "unrealizedPL": 533.84
+    },
+    {
+      "underlyingTicker": "9988",
+      "underlying": "9988 Alibaba HK",
+      "market": "HK",
+      "contract": "9988 28MAY26 145 Call",
+      "expiry": "2026-05-28",
+      "right": "Call",
+      "qty": -1,
+      "source": "IBKR Flex",
+      "value": -1340.0,
+      "unrealizedPL": -292.89
+    },
+    {
+      "underlyingTicker": "9988",
+      "underlying": "9988 Alibaba HK",
+      "market": "HK",
+      "contract": "9988 28MAY26 115 Put",
+      "expiry": "2026-05-28",
+      "right": "Put",
+      "qty": -3,
+      "source": "IBKR Flex",
+      "value": -1005.0,
+      "unrealizedPL": 1085.95
+    },
+    {
+      "underlyingTicker": "9988",
+      "underlying": "9988 Alibaba HK",
+      "market": "HK",
+      "contract": "9988 29JUN26 145 Call",
+      "expiry": "2026-06-29",
+      "right": "Call",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -4580.0,
+      "unrealizedPL": -1546.16
+    },
+    {
+      "underlyingTicker": "9988",
+      "underlying": "9988 Alibaba HK",
+      "market": "HK",
+      "contract": "9988 29JUN26 120 Put",
+      "expiry": "2026-06-29",
+      "right": "Put",
+      "qty": -3,
+      "source": "IBKR Flex",
+      "value": -4665.0,
+      "unrealizedPL": -74.43
+    },
+    {
+      "underlyingTicker": "AMD",
+      "underlying": "AMD",
+      "market": "US",
+      "contract": "AMD 05JUN26 355 Put",
+      "expiry": "2026-06-05",
+      "right": "Put",
+      "qty": -1,
+      "source": "IBKR Flex",
+      "value": -722.47,
+      "unrealizedPL": 117.746438
+    },
+    {
+      "underlyingTicker": "BABA",
+      "underlying": "BABA",
+      "market": "US",
+      "contract": "BABA 18JUN26 155 Call",
+      "expiry": "2026-06-18",
+      "right": "Call",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -960.0,
+      "unrealizedPL": -280.781626
+    },
+    {
+      "underlyingTicker": "GOOGL",
+      "underlying": "GOOGL",
+      "market": "US",
+      "contract": "GOOGL 15MAY26 370 Call",
+      "expiry": "2026-05-15",
+      "right": "Call",
+      "qty": -1,
+      "source": "IBKR Flex",
+      "value": -2924.31,
+      "unrealizedPL": -2519.083468
+    },
+    {
+      "underlyingTicker": "JNJ",
+      "underlying": "JNJ",
+      "market": "US",
+      "contract": "JNJ 29MAY26 215 Put",
+      "expiry": "2026-05-29",
+      "right": "Put",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -333.0,
+      "unrealizedPL": 77.455942
+    },
+    {
+      "underlyingTicker": "JNJ",
+      "underlying": "JNJ",
+      "market": "US",
+      "contract": "JNJ 29MAY26 220 Put",
+      "expiry": "2026-05-29",
+      "right": "Put",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -634.0,
+      "unrealizedPL": -170.994776
+    },
+    {
+      "underlyingTicker": "MORN",
+      "underlying": "MORN",
+      "market": "US",
+      "contract": "MORN 15MAY26 160 Put",
+      "expiry": "2026-05-15",
+      "right": "Put",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -525.56,
+      "unrealizedPL": 30.892663
+    },
+    {
+      "underlyingTicker": "MSFT",
+      "underlying": "MSFT",
+      "market": "US",
+      "contract": "MSFT 12JUN26 390 Put",
+      "expiry": "2026-06-12",
+      "right": "Put",
+      "qty": -1,
+      "source": "IBKR Flex",
+      "value": -542.5,
+      "unrealizedPL": 44.613118
+    },
+    {
+      "underlyingTicker": "MSFT",
+      "underlying": "MSFT",
+      "market": "US",
+      "contract": "MSFT 18JUN26 390 Put",
+      "expiry": "2026-06-18",
+      "right": "Put",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -1240.0,
+      "unrealizedPL": -100.802854
+    },
+    {
+      "underlyingTicker": "NFLX",
+      "underlying": "NFLX",
+      "market": "US",
+      "contract": "NFLX 05JUN26 80 Put",
+      "expiry": "2026-06-05",
+      "right": "Put",
+      "qty": -3,
+      "source": "IBKR Flex",
+      "value": -168.0,
+      "unrealizedPL": 5.075457
+    },
+    {
+      "underlyingTicker": "SLV",
+      "underlying": "SLV",
+      "market": "US",
+      "contract": "SLV 18JUN26 79 Call",
+      "expiry": "2026-06-18",
+      "right": "Call",
+      "qty": -2,
+      "source": "IBKR Flex",
+      "value": -427.0,
+      "unrealizedPL": -4.538878
+    },
+    {
+      "underlyingTicker": "SOFI",
+      "underlying": "SOFI",
+      "market": "US",
+      "contract": "SOFI 18JUN26 20 Call",
+      "expiry": "2026-06-18",
+      "right": "Call",
+      "qty": -5,
+      "source": "IBKR Flex",
+      "value": -127.5,
+      "unrealizedPL": 8.673463
+    }
   ]
 }
