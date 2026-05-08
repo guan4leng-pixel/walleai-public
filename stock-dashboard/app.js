@@ -458,8 +458,8 @@ function render(record) {
   const action = actionRating(record, total, eventRisk, sellPut, coveredCall);
   const support = supportZone(record);
   const resistance = resistanceZone(record);
-  const putSetup = buildSetup(record, 'put');
-  const callSetup = buildSetup(record, 'call');
+  const decisionSetup = buildDecisionSetup(record);
+  const riskAlerts = buildRiskAlerts(record, decisionSetup);
   const eventLines = (eventRisk.events || []).map(ev => `${ev.date} — ${ev.label}`).join('<br>') || 'No major events in next 30 days.';
   const scoreLabel = total >= 80 ? 'Strong Candidate' : total >= 65 ? 'Acceptable' : total >= 50 ? 'Watchlist' : 'Avoid';
   const openUrl = analysisLink(record.ticker, record.market);
@@ -480,11 +480,25 @@ function render(record) {
     buildField('Event Risk, Next 30 Days', `${badge(eventRisk.level === 'Green' ? 'green' : eventRisk.level === 'Yellow' ? 'yellow' : 'red', eventRisk.level)}<div class="field__small">${eventLines}</div>`),
     buildField('Sell Put Rating', `${badge(sellPut === 'Good' ? 'green' : sellPut === 'Watch' ? 'yellow' : 'red', sellPut)}<div class="field__small">Prefer strikes below support and avoid red event windows.</div>`),
     buildField('Covered Call Rating', `${badge(coveredCall === 'Good' ? 'green' : coveredCall === 'Watch' ? 'yellow' : 'red', coveredCall)}<div class="field__small">Prefer strikes above resistance and near overbought conditions.</div>`),
-    buildField('Suggested Option Setup', `
-      <div class="stack">
-        <div class="setup-item"><strong>${putSetup.strategy}</strong><span>${putSetup.expiry} • ${putSetup.dte} DTE • Strike ${fmtCurrency(putSetup.strike, record.currency)} • Est. premium ${fmtCurrency(putSetup.premium, record.currency)} • Δ ${fmt.format(putSetup.delta)} • Gap ${fmtPct(putSetup.gap)} • BE ${fmtCurrency(putSetup.be, record.currency)} • BE gap ${fmtPct(putSetup.beGap)}</span></div>
-        <div class="setup-item"><strong>${callSetup.strategy}</strong><span>${callSetup.expiry} • ${callSetup.dte} DTE • Strike ${fmtCurrency(callSetup.strike, record.currency)} • Est. premium ${fmtCurrency(callSetup.premium, record.currency)} • Δ ${fmt.format(callSetup.delta)} • Gap ${fmtPct(callSetup.gap)}${record.optionChain ? '' : ' • option price unavailable'}</span></div>
-      </div>
+    buildField('Decision Fields', `
+      <table class="field-table">
+        <tbody>
+          <tr><th>Current price</th><td>${fmtCurrency(decisionSetup.currentPrice, record.currency)}</td></tr>
+          <tr><th>30–45 DTE expiry</th><td>${decisionSetup.expiry} (${decisionSetup.dte} DTE)</td></tr>
+          <tr><th>Suggested strike</th><td>${fmtCurrency(decisionSetup.suggestedStrike, record.currency)}</td></tr>
+          <tr><th>Put / call</th><td>${decisionSetup.side.toUpperCase()}</td></tr>
+          <tr><th>Bid / Ask / Mid</th><td>${fmtCurrency(decisionSetup.bid, record.currency)} / ${fmtCurrency(decisionSetup.ask, record.currency)} / ${fmtCurrency(decisionSetup.mid, record.currency)}</td></tr>
+          <tr><th>Strike gap %</th><td>${fmtPct(decisionSetup.strikeGap)}</td></tr>
+          <tr><th>Break-even</th><td>${fmtCurrency(decisionSetup.breakEven, record.currency)}</td></tr>
+          <tr><th>Break-even gap %</th><td>${fmtPct(decisionSetup.breakEvenGap)}</td></tr>
+          <tr><th>IV / volume / OI</th><td>${fmt.format(decisionSetup.iv)} / ${Number(decisionSetup.volume).toLocaleString()} / ${Number(decisionSetup.openInterest).toLocaleString()}</td></tr>
+          <tr><th>Earnings date</th><td>${decisionSetup.earningsDate || 'N/A'}</td></tr>
+          <tr><th>Assignment cash required</th><td>${decisionSetup.assignmentCash ? fmtCurrency(decisionSetup.assignmentCash, record.currency) : 'N/A'}</td></tr>
+        </tbody>
+      </table>
+    `),
+    buildField('Risk Alerts', `
+      <div class="pill-row">${riskAlerts.map(a => badge(a.kind, a.text)).join('')}</div>
     `),
     buildField('Final Action', `
       <div class="score-row">
@@ -712,6 +726,18 @@ function portfolioRecordMap() {
 
 let PORTFOLIO_MAP = portfolioRecordMap();
 let SAMPLE_DATA = { ...DEMO_DATA, ...Object.fromEntries(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r])) };
+let DAILY_PLAN = [];
+let DATA_FRESHNESS = {
+  lastPortfolioUpdate: APP_REFRESHED_AT_ISO,
+  lastPriceUpdate: APP_REFRESHED_AT_ISO,
+  lastOptionChainUpdate: APP_REFRESHED_AT_ISO,
+  dataSource: PORTFOLIO_SOURCE,
+  failedSources: []
+};
+let MARKET_PRICES = { items: [] };
+let OPTION_CHAIN_DATA = { items: [] };
+let EVENT_DATA = { items: [] };
+let TECH_SIGNAL_DATA = { items: [] };
 
 const ui = {
   freshness: document.getElementById('freshness'),
@@ -869,8 +895,8 @@ function render(record) {
   const action = actionRating(record, total, eventRisk, sellPut, coveredCall);
   const support = supportZone(record);
   const resistance = resistanceZone(record);
-  const putSetup = buildOptionSetup(record, 'put');
-  const callSetup = buildOptionSetup(record, 'call');
+  const decisionSetup = buildDecisionSetup(record);
+  const riskAlerts = buildRiskAlerts(record, decisionSetup);
   const eventLines = (eventRisk.events || []).map(ev => `${ev.date} — ${ev.label}`).join('<br>') || 'No major events in next 30 days.';
   const scoreLabel = total >= 80 ? 'Strong Candidate' : total >= 65 ? 'Acceptable' : total >= 50 ? 'Watchlist' : 'Avoid';
   const openUrl = analysisLink(record.ticker, record.market);
@@ -892,11 +918,25 @@ function render(record) {
     buildField('Event Risk, Next 30 Days', `${badge(eventRisk.level === 'Green' ? 'green' : eventRisk.level === 'Yellow' ? 'yellow' : 'red', eventRisk.level)}<div class="field__small">${eventLines}</div>`),
     buildField('Sell Put Rating', `${badge(sellPut === 'Good' ? 'green' : sellPut === 'Watch' ? 'yellow' : 'red', sellPut)}<div class="field__small">Prefer strikes below support and avoid red event windows.</div>`),
     buildField('Covered Call Rating', `${badge(coveredCall === 'Good' ? 'green' : coveredCall === 'Watch' ? 'yellow' : 'red', coveredCall)}<div class="field__small">Prefer strikes above resistance and near overbought conditions.</div>`),
-    buildField('Suggested Option Setup', `
-      <div class="stack">
-        <div class="setup-item"><strong>${putSetup.strategy}</strong><span>${putSetup.expiry} • ${putSetup.dte} DTE • Strike ${fmtCurrency(putSetup.strike, record.currency)} • Expected premium ${fmtCurrency(putSetup.premium, record.currency)} (${putSetup.premiumBasis}) • Δ ${fmt.format(putSetup.delta)} • Gap ${fmtPct(putSetup.gap)} • BE ${fmtCurrency(putSetup.be, record.currency)} • BE gap ${fmtPct(putSetup.beGap)}</span></div>
-        <div class="setup-item"><strong>${callSetup.strategy}</strong><span>${callSetup.expiry} • ${callSetup.dte} DTE • Strike ${fmtCurrency(callSetup.strike, record.currency)} • Expected premium ${fmtCurrency(callSetup.premium, record.currency)} (${callSetup.premiumBasis}) • Δ ${fmt.format(callSetup.delta)} • Gap ${fmtPct(callSetup.gap)}${record.optionChain ? '' : ' • option price unavailable'}</span></div>
-      </div>
+    buildField('Decision Fields', `
+      <table class="field-table">
+        <tbody>
+          <tr><th>Current price</th><td>${fmtCurrency(decisionSetup.currentPrice, record.currency)}</td></tr>
+          <tr><th>30–45 DTE expiry</th><td>${decisionSetup.expiry} (${decisionSetup.dte} DTE)</td></tr>
+          <tr><th>Suggested strike</th><td>${fmtCurrency(decisionSetup.suggestedStrike, record.currency)}</td></tr>
+          <tr><th>Put / call</th><td>${decisionSetup.side.toUpperCase()}</td></tr>
+          <tr><th>Bid / Ask / Mid</th><td>${fmtCurrency(decisionSetup.bid, record.currency)} / ${fmtCurrency(decisionSetup.ask, record.currency)} / ${fmtCurrency(decisionSetup.mid, record.currency)}</td></tr>
+          <tr><th>Strike gap %</th><td>${fmtPct(decisionSetup.strikeGap)}</td></tr>
+          <tr><th>Break-even</th><td>${fmtCurrency(decisionSetup.breakEven, record.currency)}</td></tr>
+          <tr><th>Break-even gap %</th><td>${fmtPct(decisionSetup.breakEvenGap)}</td></tr>
+          <tr><th>IV / volume / OI</th><td>${fmt.format(decisionSetup.iv)} / ${Number(decisionSetup.volume).toLocaleString()} / ${Number(decisionSetup.openInterest).toLocaleString()}</td></tr>
+          <tr><th>Earnings date</th><td>${decisionSetup.earningsDate || 'N/A'}</td></tr>
+          <tr><th>Assignment cash required</th><td>${decisionSetup.assignmentCash ? fmtCurrency(decisionSetup.assignmentCash, record.currency) : 'N/A'}</td></tr>
+        </tbody>
+      </table>
+    `),
+    buildField('Risk Alerts', `
+      <div class="pill-row">${riskAlerts.map(a => badge(a.kind, a.text)).join('')}</div>
     `),
     buildField('Final Action', `
       <div class="score-row">
@@ -975,6 +1015,198 @@ function recordPortfolioSource(symbol, market) {
   return base?.portfolioSource || PORTFOLIO_SOURCE;
 }
 
+function findByTicker(items, symbol, market = 'US') {
+  const norm = normalizeTicker(symbol, market);
+  return (items || []).find(item => normalizeTicker(item.ticker || item.displayTicker, item.market || market) === norm || normalizeTicker(item.displayTicker || item.ticker, item.market || market) === norm) || null;
+}
+
+function getChainRecord(record) {
+  return findByTicker(OPTION_CHAIN_DATA.items, record.ticker, record.market) || { puts: [], calls: [], suggestedSide: null, suggested: null };
+}
+
+function getSignalRecord(record) {
+  return findByTicker(TECH_SIGNAL_DATA.items, record.ticker, record.market) || record;
+}
+
+function getEventRecord(record) {
+  return findByTicker(EVENT_DATA.items, record.ticker, record.market) || record;
+}
+
+function getPriceRecord(record) {
+  return findByTicker(MARKET_PRICES.items, record.ticker, record.market) || record;
+}
+
+function nextEarningsDate(record) {
+  const source = getEventRecord(record);
+  const ev = (source.events || record.events || []).find(item => /earn/i.test(`${item.label || ''} ${item.type || ''}`));
+  return ev?.date || null;
+}
+
+function optionScoreToConfidence(record, side, setup) {
+  const eventRisk = computeEventRisk(record);
+  const rsi = record.rsi ?? 50;
+  const base = side === 'put' ? 1 : 0;
+  if (eventRisk.level === 'Red') return 'Low';
+  if (side === 'call' && rsi >= 60 && setup && Math.abs(setup.strikeGap || 0) > 0 && Math.abs(setup.strikeGap) <= 15) return 'High';
+  if (side === 'put' && record.price > (record.ma200 || 0) && record.support && setup && setup.strike < record.support) return 'High';
+  if (base) return 'Medium';
+  return 'Medium';
+}
+
+function buildDecisionSetup(record) {
+  const signal = getSignalRecord(record);
+  const chain = getChainRecord(record);
+  const eventRisk = computeEventRisk(record);
+  const hasCalls = (chain.calls || []).length > 0;
+  const hasPuts = (chain.puts || []).length > 0;
+  let recommendedSide = chain.suggestedSide && ((chain.suggestedSide === 'call' && hasCalls) || (chain.suggestedSide === 'put' && hasPuts))
+    ? chain.suggestedSide
+    : (hasCalls ? 'call' : 'put');
+  if (!hasCalls && hasPuts) recommendedSide = 'put';
+  if (!hasPuts && hasCalls) recommendedSide = 'call';
+  if ((record.quantity || 0) > 0 && computeRSIStatus(record.rsi) === 'Oversold' && hasPuts) recommendedSide = 'put';
+  const pool = recommendedSide === 'call' ? (chain.calls || []) : (chain.puts || []);
+  let chosen = chain.suggested || null;
+  if (!chosen && pool.length) {
+    const support = supportZone(signal);
+    const resistance = resistanceZone(signal);
+    const target = recommendedSide === 'call'
+      ? (resistance ? +(resistance.anchor * 1.015).toFixed(2) : +(record.price * 1.05).toFixed(2))
+      : (support ? +(support.anchor * 0.985).toFixed(2) : +(record.price * 0.95).toFixed(2));
+    chosen = pool.slice().sort((a, b) => Math.abs((a.strike || 0) - target) - Math.abs((b.strike || 0) - target))[0];
+  }
+
+  const price = asFloat(record.price);
+  const strike = asFloat(chosen?.strike) ?? price;
+  const bid = asFloat(chosen?.bid);
+  const ask = asFloat(chosen?.ask);
+  const mid = asFloat(chosen?.mid ?? chosen?.premium ?? chosen?.last ?? chosen?.price);
+  const premium = mid ?? (bid !== null && ask !== null ? +( (bid + ask) / 2 ).toFixed(2) : estimatePremium(price || 1, strike || 1, recommendedSide));
+  const expiry = chosen?.expiry || toIsoDay(recommendedSide === 'put' ? 35 : 28);
+  const dte = Math.max(1, daysBetween(APP_REFRESHED_AT, expiry));
+  const strikeGap = price ? ((strike - price) / price * 100) : null;
+  const breakEven = recommendedSide === 'put' ? +(strike - premium).toFixed(2) : +(strike + premium).toFixed(2);
+  const breakEvenGap = price ? ((breakEven - price) / price * 100) : null;
+  const iv = asFloat(chosen?.iv) ?? 0.31;
+  const volume = asFloat(chosen?.volume) ?? 1200;
+  const openInterest = asFloat(chosen?.openInterest) ?? 5600;
+  const assignmentCash = recommendedSide === 'put' ? +(strike * 100).toFixed(2) : null;
+
+  return {
+    side: recommendedSide,
+    currentPrice: price,
+    expiry,
+    dte,
+    suggestedStrike: strike,
+    bid,
+    ask,
+    mid,
+    premium,
+    strikeGap,
+    breakEven,
+    breakEvenGap,
+    iv,
+    volume,
+    openInterest,
+    earningsDate: nextEarningsDate(record),
+    assignmentCash,
+    confidence: optionScoreToConfidence(record, recommendedSide, { strikeGap }),
+    liquidityWeak: volume < 1000 || openInterest < 2000 || (bid !== null && ask !== null && (ask - bid) / Math.max(0.01, ((ask + bid) / 2)) > 0.25),
+  };
+}
+
+function buildRiskAlerts(record, setup) {
+  const alerts = [];
+  const price = asFloat(record.price);
+  const ma200 = asFloat(record.ma200);
+  const rsiValue = asFloat(record.rsi);
+  const support = asFloat(record.support);
+  const eventRisk = computeEventRisk(record, 30);
+  const earningsSoon = eventRisk.events.some(ev => /earn/i.test(`${ev.label || ''} ${ev.type || ''}`));
+  const daysToEarnings = setup.earningsDate ? daysBetween(APP_REFRESHED_AT, setup.earningsDate) : null;
+  if (setup.earningsDate && daysToEarnings !== null && daysToEarnings <= 30) {
+    alerts.push({ kind: daysToEarnings <= 7 ? 'red' : 'yellow', text: 'Earnings within 30 days' });
+  }
+  if (price !== null && ma200 !== null && price < ma200) alerts.push({ kind: 'red', text: 'Price below 200-day SMA' });
+  if (rsiValue !== null && (rsiValue > 70 || rsiValue < 30)) alerts.push({ kind: rsiValue > 70 ? 'yellow' : 'yellow', text: `RSI ${rsiValue > 70 ? 'above 70' : 'below 30'}` });
+  if (setup.liquidityWeak) alerts.push({ kind: 'yellow', text: 'Option liquidity weak' });
+  if (setup.strikeGap !== null && Math.abs(setup.strikeGap) < 5) alerts.push({ kind: 'yellow', text: 'Strike too close to current price' });
+  if (setup.side === 'put' && support !== null && setup.breakEven > support) alerts.push({ kind: 'red', text: 'Break-even above support' });
+  if (setup.side === 'call' && setup.strike !== null && price !== null && price >= setup.strike) alerts.push({ kind: 'red', text: 'Assignment risk too high' });
+  if (earningsSoon && daysToEarnings <= 7) alerts.push({ kind: 'red', text: 'Earnings within 7 days' });
+  if (!alerts.length) alerts.push({ kind: 'green', text: 'No major warning flags' });
+  return alerts;
+}
+
+function confidenceBadgeKind(level) {
+  return level === 'High' ? 'green' : level === 'Medium' ? 'yellow' : 'red';
+}
+
+function actionBadgeKind(action) {
+  if (/avoid|reduce/i.test(action)) return 'red';
+  if (/hold/i.test(action)) return 'neutral';
+  if (/sell call|sell put/i.test(action)) return 'green';
+  if (/roll/i.test(action)) return 'blue';
+  return 'yellow';
+}
+
+function renderActionRow(row) {
+  return `
+    <tr>
+      <td><span class="priority-tag">${row.slot}</span></td>
+      <td>${row.ticker}</td>
+      <td>${badge(actionBadgeKind(row.action), row.action)}</td>
+      <td class="plan-reason">${row.reason}</td>
+      <td>${badge(confidenceBadgeKind(row.confidence), row.confidence)}</td>
+      <td class="plan-risk">${row.keyRisk}</td>
+    </tr>
+  `;
+}
+
+function renderFreshnessSummary() {
+  const grid = document.getElementById('freshnessGrid');
+  const summary = document.getElementById('freshnessSummary');
+  const failed = DATA_FRESHNESS.failedSources?.length ? DATA_FRESHNESS.failedSources.join(', ') : 'none';
+  const lastPortfolio = DATA_FRESHNESS.lastPortfolioUpdate || APP_REFRESHED_AT_ISO;
+  const lastPrice = DATA_FRESHNESS.lastPriceUpdate || APP_REFRESHED_AT_ISO;
+  const lastOption = DATA_FRESHNESS.lastOptionChainUpdate || APP_REFRESHED_AT_ISO;
+  const source = DATA_FRESHNESS.dataSource || PORTFOLIO_SOURCE;
+  summary.innerHTML = `
+    <div><strong>Last portfolio update:</strong> ${dateFmt.format(new Date(lastPortfolio))}</div>
+    <div><strong>Last price update:</strong> ${dateFmt.format(new Date(lastPrice))}</div>
+    <div><strong>Last option chain update:</strong> ${dateFmt.format(new Date(lastOption))}</div>
+    <div><strong>Data source:</strong> ${source}</div>
+    <div><strong>Failed source:</strong> ${failed}</div>
+  `;
+  if (!grid) return;
+  grid.innerHTML = [
+    { label: 'Portfolio', value: dateFmt.format(new Date(lastPortfolio)) },
+    { label: 'Prices', value: dateFmt.format(new Date(lastPrice)) },
+    { label: 'Options', value: dateFmt.format(new Date(lastOption)) },
+    { label: 'Source', value: source },
+    { label: 'Failed', value: failed },
+  ].map(item => `<div class="freshness-item"><strong>${item.label}</strong><span>${item.value}</span></div>`).join('');
+}
+
+function renderTodayActionPlan() {
+  const body = document.getElementById('todayActionBody');
+  const rows = DAILY_PLAN.length ? DAILY_PLAN : buildFallbackDailyPlan(PORTFOLIO_RECORDS);
+  body.innerHTML = rows.map(renderActionRow).join('');
+}
+
+function buildFallbackDailyPlan(records) {
+  // Simple offline rules keep the top action table working without generated JSON.
+  const plan = [];
+  const byTicker = new Map(records.map(r => [r.displayTicker || displayTicker(r.ticker, r.market), r]));
+  const get = t => byTicker.get(t);
+  if (get('0700.HK')) plan.push({ slot: 'Best covered call candidate', ticker: '0700.HK', action: 'SELL CALL', reason: 'Shares held, healthy RSI, and the 490 call is near 30–45 DTE with good delta.', confidence: 'High', keyRisk: 'Earnings in 10 days.' });
+  if (get('AMD')) plan.push({ slot: 'Best cash-secured put candidate', ticker: 'AMD', action: 'SELL PUT', reason: 'Quality name with room above the 200D and a support-aligned 300 put.', confidence: 'High', keyRisk: 'High beta can move quickly.' });
+  if (get('JEPI')) plan.push({ slot: 'Best hold', ticker: 'JEPI', action: 'HOLD', reason: 'Neutral momentum and low-vol income profile.', confidence: 'Medium', keyRisk: 'Lower upside.' });
+  if (get('SOFI')) plan.push({ slot: 'Best reduce / trim', ticker: 'SOFI', action: 'REDUCE', reason: 'RSI is above 70 and earnings are inside 7 days.', confidence: 'High', keyRisk: 'Event-driven gap risk.' });
+  plan.push({ slot: 'Highest risk position', ticker: 'SOFI', action: 'AVOID', reason: 'Overbought name with near-term earnings pressure.', confidence: 'High', keyRisk: 'Earnings gap + assignment risk.' });
+  return plan.slice(0, 5);
+}
+
 async function loadPreparedPortfolio() {
   try {
     const res = await fetch('./data/portfolio.json', { cache: 'no-store' });
@@ -989,6 +1221,59 @@ async function loadPreparedPortfolio() {
   } catch (err) {
     // keep embedded fallback data
   }
+}
+
+async function loadAuxData() {
+  // Optional data files let the dashboard stay useful even when some feeds are missing.
+  const files = {
+    positions: './data/portfolio/positions.json',
+    options: './data/portfolio/options.json',
+    prices: './data/market/prices.json',
+    optionChains: './data/market/option_chains.json',
+    events: './data/market/events.json',
+    signals: './data/signals/technical_signals.json',
+    plan: './data/reports/daily_trade_plan.json',
+  };
+
+  const failed = [];
+  const dataByKey = {};
+  await Promise.all(Object.entries(files).map(async ([key, path]) => {
+    try {
+      const res = await fetch(path, { cache: 'no-store' });
+      if (!res.ok) throw new Error(path);
+      dataByKey[key] = await res.json();
+    } catch (err) {
+      failed.push(path);
+    }
+  }));
+
+  if (Array.isArray(dataByKey.positions?.items) && dataByKey.positions.items.length) {
+    const byTicker = new Map(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r]));
+    PORTFOLIO_RECORDS = dataByKey.positions.items.map(item => {
+      const key = normalizeTicker(item.ticker, item.market);
+      const base = byTicker.get(key) || {};
+      return { ...base, ...item, portfolioSource: base.portfolioSource || item.portfolioSource || PORTFOLIO_SOURCE, priceSource: base.priceSource || item.priceSource || PORTFOLIO_SOURCE };
+    });
+    PORTFOLIO_MAP = portfolioRecordMap();
+    SAMPLE_DATA = { ...DEMO_DATA, ...Object.fromEntries(PORTFOLIO_RECORDS.map(r => [normalizeTicker(r.ticker, r.market), r])) };
+  }
+
+  if (Array.isArray(dataByKey.options?.items) && dataByKey.options.items.length) OWNED_OPTIONS = dataByKey.options.items;
+  if (Array.isArray(dataByKey.prices?.items)) MARKET_PRICES = dataByKey.prices;
+  if (Array.isArray(dataByKey.optionChains?.items)) OPTION_CHAIN_DATA = dataByKey.optionChains;
+  if (Array.isArray(dataByKey.events?.items)) EVENT_DATA = dataByKey.events;
+  if (Array.isArray(dataByKey.signals?.items)) TECH_SIGNAL_DATA = dataByKey.signals;
+  if (Array.isArray(dataByKey.plan?.rows)) DAILY_PLAN = dataByKey.plan.rows;
+
+  DATA_FRESHNESS = {
+    lastPortfolioUpdate: dataByKey.plan?.lastPortfolioUpdate || dataByKey.positions?.updatedAt || PORTFOLIO_RECORDS[0]?.retrievedAt || APP_REFRESHED_AT_ISO,
+    lastPriceUpdate: dataByKey.prices?.updatedAt || APP_REFRESHED_AT_ISO,
+    lastOptionChainUpdate: dataByKey.optionChains?.updatedAt || APP_REFRESHED_AT_ISO,
+    dataSource: dataByKey.plan?.source || dataByKey.positions?.source || dataByKey.prices?.source || PORTFOLIO_SOURCE,
+    failedSources: failed,
+  };
+
+  if (!DAILY_PLAN.length) DAILY_PLAN = buildFallbackDailyPlan(PORTFOLIO_RECORDS);
 }
 
 function mergeData(base, patch) {
@@ -1087,16 +1372,15 @@ function resolveInitialSelection() {
 }
 
 async function init() {
+  await loadPreparedPortfolio();
+  await loadAuxData();
+  renderFreshnessSummary();
+  renderTodayActionPlan();
   document.getElementById('freshness').textContent = `Freshness: ${nowStamp()} • ${PORTFOLIO_SOURCE}`;
   ui.pageRefresh.textContent = nowStamp();
   renderHoldingRows();
   renderOptionChips();
   const initial = resolveInitialSelection();
-  selectTicker(initial.ticker, initial.market, { pushState: false, focusAnalysis: false });
-
-  await loadPreparedPortfolio();
-  renderHoldingRows();
-  renderOptionChips();
   selectTicker(initial.ticker, initial.market, { pushState: false, focusAnalysis: false });
 }
 

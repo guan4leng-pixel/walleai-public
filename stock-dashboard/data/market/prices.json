@@ -1,0 +1,106 @@
+{
+  "updatedAt": "2026-05-08T11:51:53+08:00",
+  "source": "IBKR Flex Activity Statement forwarded via email",
+  "failedSources": [],
+  "items": [
+    {
+      "ticker": "700",
+      "displayTicker": "0700.HK",
+      "market": "HK",
+      "currency": "HKD",
+      "price": 463.0,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "9988",
+      "displayTicker": "9988.HK",
+      "market": "HK",
+      "currency": "HKD",
+      "price": 134.2,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "AMD",
+      "displayTicker": "AMD",
+      "market": "US",
+      "currency": "USD",
+      "price": 421.39,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "BABA",
+      "displayTicker": "BABA",
+      "market": "US",
+      "currency": "USD",
+      "price": 141.44,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "GOOGL",
+      "displayTicker": "GOOGL",
+      "market": "US",
+      "currency": "USD",
+      "price": 398.04,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "H78",
+      "displayTicker": "H78.SI",
+      "market": "SG",
+      "currency": "USD",
+      "price": 7.97,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "JEPG",
+      "displayTicker": "JEPG",
+      "market": "US",
+      "currency": "USD",
+      "price": 26.09,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "JEPI",
+      "displayTicker": "JEPI",
+      "market": "US",
+      "currency": "USD",
+      "price": 24.65,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "JEPQ",
+      "displayTicker": "JEPQ",
+      "market": "US",
+      "currency": "USD",
+      "price": 27.185,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "SLV",
+      "displayTicker": "SLV",
+      "market": "US",
+      "currency": "USD",
+      "price": 70.13,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    },
+    {
+      "ticker": "SOFI",
+      "displayTicker": "SOFI",
+      "market": "US",
+      "currency": "USD",
+      "price": 16.3,
+      "updatedAt": "2026-05-08T10:53:49+08:00",
+      "source": "IBKR Flex"
+    }
+  ]
+}

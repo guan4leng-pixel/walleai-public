@@ -1,0 +1,50 @@
+{
+  "updatedAt": "2026-05-08T11:51:53+08:00",
+  "source": "IBKR Flex Activity Statement forwarded via email",
+  "failedSources": [],
+  "lastPortfolioUpdate": "2026-05-06T10:53:49+08:00",
+  "lastPriceUpdate": "2026-05-08T11:51:53+08:00",
+  "lastOptionChainUpdate": "2026-05-08T11:51:53+08:00",
+  "rows": [
+    {
+      "slot": "Best covered call candidate",
+      "ticker": "0700.HK",
+      "action": "SELL CALL",
+      "reason": "Shares held, RSI is healthy, and the 490 call is near 30–45 DTE with a good delta.",
+      "confidence": "High",
+      "keyRisk": "Earnings in 10 days; premium can gap on event risk."
+    },
+    {
+      "slot": "Best cash-secured put candidate",
+      "ticker": "AMD",
+      "action": "SELL PUT",
+      "reason": "Quality name with room above 200D and a clean 300 put setup below support.",
+      "confidence": "High",
+      "keyRisk": "Sharp upside can leave put premium underpriced."
+    },
+    {
+      "slot": "Best hold",
+      "ticker": "JEPI",
+      "action": "HOLD",
+      "reason": "Low-vol income ETF with neutral momentum and no major event pressure.",
+      "confidence": "Medium",
+      "keyRisk": "Lower upside; mostly carry and distribution play."
+    },
+    {
+      "slot": "Best reduce / trim",
+      "ticker": "SOFI",
+      "action": "REDUCE",
+      "reason": "RSI is above 70 and earnings are inside 7 days, so risk is front-loaded.",
+      "confidence": "High",
+      "keyRisk": "Assignment / gap risk around earnings."
+    },
+    {
+      "slot": "Highest risk position",
+      "ticker": "SOFI",
+      "action": "AVOID",
+      "reason": "Overbought stock with earnings in 7 days and elevated options risk.",
+      "confidence": "High",
+      "keyRisk": "Earnings gap + break-even compression."
+    }
+  ]
+}

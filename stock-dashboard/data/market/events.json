@@ -1,0 +1,77 @@
+{
+  "updatedAt": "2026-05-08T11:51:53+08:00",
+  "source": "IBKR Flex Activity Statement forwarded via email",
+  "failedSources": [],
+  "items": [
+    {
+      "ticker": "700",
+      "displayTicker": "0700.HK",
+      "market": "HK",
+      "events": [
+        {
+          "date": "2026-05-18",
+          "label": "Results briefing",
+          "type": "results"
+        }
+      ],
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "9988",
+      "displayTicker": "9988.HK",
+      "market": "HK",
+      "events": [
+        {
+          "date": "2026-05-20",
+          "label": "Results briefing",
+          "type": "results"
+        }
+      ],
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "BABA",
+      "displayTicker": "BABA",
+      "market": "US",
+      "events": [
+        {
+          "date": "2026-05-20",
+          "label": "Results briefing",
+          "type": "results"
+        },
+        {
+          "date": "2026-05-28",
+          "label": "China policy risk watch",
+          "type": "macro"
+        }
+      ],
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "GOOGL",
+      "displayTicker": "GOOGL",
+      "market": "US",
+      "events": [
+        {
+          "date": "2026-05-23",
+          "label": "Results briefing",
+          "type": "results"
+        }
+      ],
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "SOFI",
+      "displayTicker": "SOFI",
+      "market": "US",
+      "events": [
+        {
+          "date": "2026-05-15",
+          "label": "Earnings",
+          "type": "earnings"
+        }
+      ],
+      "source": "IBKR Flex statement (2026-05-06)"
+    }
+  ]
+}

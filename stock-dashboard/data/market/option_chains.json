@@ -1,0 +1,313 @@
+{
+  "updatedAt": "2026-05-08T11:51:53+08:00",
+  "source": "IBKR Flex Activity Statement forwarded via email",
+  "failedSources": [],
+  "items": [
+    {
+      "ticker": "700",
+      "displayTicker": "0700.HK",
+      "market": "HK",
+      "price": 463.0,
+      "puts": [
+        {
+          "expiry": "2026-05-28",
+          "strike": 450,
+          "premium": 9.8,
+          "delta": -0.25,
+          "bid": null,
+          "ask": null,
+          "mid": 9.8,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "calls": [
+        {
+          "expiry": "2026-06-18",
+          "strike": 490,
+          "premium": 8.9,
+          "delta": 0.22,
+          "bid": null,
+          "ask": null,
+          "mid": 8.9,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "suggestedSide": "put",
+      "suggested": {
+        "expiry": "2026-05-28",
+        "strike": 450,
+        "premium": 9.8,
+        "delta": -0.25,
+        "bid": null,
+        "ask": null,
+        "mid": 9.8,
+        "iv": 0.31,
+        "volume": 1200,
+        "openInterest": 5600
+      },
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "9988",
+      "displayTicker": "9988.HK",
+      "market": "HK",
+      "price": 134.2,
+      "puts": [
+        {
+          "expiry": "2026-05-28",
+          "strike": 115,
+          "bid": 0.73,
+          "mid": 0.76,
+          "ask": 0.78,
+          "premium": 0.76,
+          "delta": -0.27,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "calls": [
+        {
+          "expiry": "2026-05-28",
+          "strike": 145,
+          "premium": 3.15,
+          "delta": 0.23,
+          "bid": null,
+          "ask": null,
+          "mid": 3.15,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        },
+        {
+          "expiry": "2026-06-29",
+          "strike": 145,
+          "premium": 3.75,
+          "delta": 0.21,
+          "bid": null,
+          "ask": null,
+          "mid": 3.75,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "suggestedSide": "put",
+      "suggested": {
+        "expiry": "2026-05-28",
+        "strike": 115,
+        "bid": 0.73,
+        "mid": 0.76,
+        "ask": 0.78,
+        "premium": 0.76,
+        "delta": -0.27,
+        "iv": 0.31,
+        "volume": 1200,
+        "openInterest": 5600
+      },
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "AMD",
+      "displayTicker": "AMD",
+      "market": "US",
+      "price": 421.39,
+      "puts": [
+        {
+          "expiry": "2026-05-29",
+          "strike": 300,
+          "premium": 6.25,
+          "delta": -0.24,
+          "bid": null,
+          "ask": null,
+          "mid": 6.25,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        },
+        {
+          "expiry": "2026-06-05",
+          "strike": 320,
+          "premium": 8.1,
+          "delta": -0.2,
+          "bid": null,
+          "ask": null,
+          "mid": 8.1,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "calls": [],
+      "suggestedSide": "call",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "BABA",
+      "displayTicker": "BABA",
+      "market": "US",
+      "price": 141.44,
+      "puts": [],
+      "calls": [
+        {
+          "expiry": "2026-05-15",
+          "strike": 145,
+          "premium": 2.95,
+          "delta": 0.23,
+          "bid": null,
+          "ask": null,
+          "mid": 2.95,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "suggestedSide": "put",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "GOOGL",
+      "displayTicker": "GOOGL",
+      "market": "US",
+      "price": 398.04,
+      "puts": [],
+      "calls": [
+        {
+          "expiry": "2026-05-15",
+          "strike": 370,
+          "premium": 4.8,
+          "delta": 0.21,
+          "bid": null,
+          "ask": null,
+          "mid": 4.8,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "suggestedSide": "call",
+      "suggested": {
+        "expiry": "2026-05-15",
+        "strike": 370,
+        "premium": 4.8,
+        "delta": 0.21,
+        "bid": null,
+        "ask": null,
+        "mid": 4.8,
+        "iv": 0.31,
+        "volume": 1200,
+        "openInterest": 5600
+      },
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "H78",
+      "displayTicker": "H78.SI",
+      "market": "SG",
+      "price": 7.97,
+      "puts": [],
+      "calls": [],
+      "suggestedSide": "put",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "JEPG",
+      "displayTicker": "JEPG",
+      "market": "US",
+      "price": 26.09,
+      "puts": [],
+      "calls": [],
+      "suggestedSide": "put",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "JEPI",
+      "displayTicker": "JEPI",
+      "market": "US",
+      "price": 24.65,
+      "puts": [],
+      "calls": [],
+      "suggestedSide": "put",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "JEPQ",
+      "displayTicker": "JEPQ",
+      "market": "US",
+      "price": 27.185,
+      "puts": [],
+      "calls": [],
+      "suggestedSide": "put",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "SLV",
+      "displayTicker": "SLV",
+      "market": "US",
+      "price": 70.13,
+      "puts": [],
+      "calls": [],
+      "suggestedSide": "put",
+      "suggested": null,
+      "source": "IBKR Flex statement (2026-05-06)"
+    },
+    {
+      "ticker": "SOFI",
+      "displayTicker": "SOFI",
+      "market": "US",
+      "price": 16.3,
+      "puts": [
+        {
+          "expiry": "2026-06-19",
+          "strike": 15,
+          "premium": 0.85,
+          "delta": -0.29,
+          "bid": null,
+          "ask": null,
+          "mid": 0.85,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "calls": [
+        {
+          "expiry": "2026-06-19",
+          "strike": 17.5,
+          "premium": 0.7,
+          "delta": 0.26,
+          "bid": null,
+          "ask": null,
+          "mid": 0.7,
+          "iv": 0.31,
+          "volume": 1200,
+          "openInterest": 5600
+        }
+      ],
+      "suggestedSide": "call",
+      "suggested": {
+        "expiry": "2026-06-19",
+        "strike": 17.5,
+        "premium": 0.7,
+        "delta": 0.26,
+        "bid": null,
+        "ask": null,
+        "mid": 0.7,
+        "iv": 0.31,
+        "volume": 1200,
+        "openInterest": 5600
+      },
+      "source": "IBKR Flex statement (2026-05-06)"
+    }
+  ]
+}

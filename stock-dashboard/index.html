@@ -21,6 +21,41 @@
   </header>
 
   <main class="shell">
+    <section class="action-overview card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Today Action Plan</p>
+          <h2>Trade the highest-value setups first</h2>
+          <p class="section-note">One clean table for the day’s best covered call, cash-secured put, hold, trim, and highest risk position.</p>
+        </div>
+        <div class="section-note section-note--right" id="freshnessSummary">
+          <div><strong>Last portfolio update:</strong> --</div>
+          <div><strong>Last price update:</strong> --</div>
+          <div><strong>Last option chain update:</strong> --</div>
+          <div><strong>Data source:</strong> --</div>
+          <div><strong>Failed source:</strong> --</div>
+        </div>
+      </div>
+
+      <div class="freshness-grid" id="freshnessGrid"></div>
+
+      <div class="table-wrap">
+        <table class="action-table">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Ticker</th>
+              <th>Action</th>
+              <th>Reason</th>
+              <th>Confidence</th>
+              <th>Key Risk</th>
+            </tr>
+          </thead>
+          <tbody id="todayActionBody"></tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="portfolio card">
       <div class="section-head">
         <div>
